@@ -1,0 +1,27 @@
+# Core Framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# LLM & RAG
+langchain==0.3.14
+langchain-groq==0.2.4
+langchain-huggingface==0.1.2
+langchain-chroma==0.2.2
+langchain-community==0.3.14
+
+# Vector Store & Embeddings
+chromadb==0.6.3
+sentence-transformers==3.4.1
+
+# Document Loaders
+pypdf==5.1.0
+python-docx==1.1.2
+
+# Data & Utilities
+pydantic==2.10.5
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+
+# CORS & HTTP
+httpx==0.28.1

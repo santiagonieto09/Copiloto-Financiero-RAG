@@ -1,0 +1,36 @@
+MARCO REGULATORIO DE BASILEA III - RESUMEN EJECUTIVO
+=====================================================
+
+1. INTRODUCCIÓN
+Basilea III es un conjunto de medidas regulatorias desarrolladas por el Comité de Supervisión Bancaria de Basilea para fortalecer la regulación, supervisión y gestión de riesgos del sector bancario. Fue introducido en respuesta a la crisis financiera de 2008.
+
+2. REQUISITOS DE CAPITAL
+- Capital Common Equity Tier 1 (CET1): Mínimo 4.5% de los activos ponderados por riesgo.
+- Capital Tier 1: Mínimo 6% de los activos ponderados por riesgo.
+- Capital Total: Mínimo 8% de los activos ponderados por riesgo.
+- Colchón de conservación de capital: 2.5% adicional de CET1.
+- Colchón anticíclico: Entre 0% y 2.5% según condiciones económicas.
+
+3. RATIO DE APALANCAMIENTO
+El ratio de apalancamiento mínimo es del 3%, calculado como el Capital Tier 1 dividido entre la exposición total. Este ratio actúa como complemento de los requisitos de capital basados en riesgo.
+
+4. LIQUIDEZ
+- Ratio de Cobertura de Liquidez (LCR): Los bancos deben mantener activos líquidos de alta calidad suficientes para cubrir las salidas netas de efectivo durante 30 días en un escenario de estrés. Mínimo: 100%.
+- Ratio de Financiación Estable Neta (NSFR): Busca asegurar que los bancos mantengan un perfil de financiación estable a largo plazo. Mínimo: 100%.
+
+5. GESTIÓN DE RIESGOS
+Los bancos deben implementar:
+- Marcos robustos de gestión de riesgo operacional.
+- Evaluaciones internas de adecuación de capital (ICAAP).
+- Pruebas de estrés periódicas.
+- Sistemas de gobierno corporativo sólidos.
+- Reportes regulatorios transparentes.
+
+6. RIESGO OPERACIONAL
+Basilea III introduce el Método Estándar (SA) para el cálculo de capital por riesgo operacional, reemplazando los enfoques anteriores. El cálculo se basa en el Indicador de Negocio (BI) y las pérdidas históricas del banco.
+
+7. IMPLEMENTACIÓN
+La implementación completa de Basilea III está programada para completarse en 2028, con los siguientes hitos:
+- 2023: Implementación inicial de los estándares revisados.
+- 2025: Fase intermedia con pisos de producción al 60%.
+- 2028: Implementación completa con pisos de producción al 72.5%.

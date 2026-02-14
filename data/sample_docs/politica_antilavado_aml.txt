@@ -1,0 +1,55 @@
+POLÍTICA DE PREVENCIÓN DE LAVADO DE ACTIVOS (AML/KYC)
+=====================================================
+
+1. MARCO LEGAL Y NORMATIVO
+Esta política se enmarca en las recomendaciones del Grupo de Acción Financiera Internacional (GAFI/FATF) y las regulaciones locales aplicables. Su objetivo es prevenir que la institución financiera sea utilizada para el lavado de activos y financiamiento del terrorismo.
+
+2. CONOZCA A SU CLIENTE (KYC - Know Your Customer)
+
+2.1 Identificación del Cliente
+Todo cliente debe proporcionar:
+- Documento de identidad vigente (cédula, pasaporte).
+- Comprobante de domicilio reciente (máximo 3 meses).
+- Declaración de origen de fondos.
+- Información sobre actividad económica.
+- Referencias bancarias (para montos superiores a USD 10,000).
+
+2.2 Debida Diligencia (CDD)
+- Debida Diligencia Simplificada: Para clientes de bajo riesgo con operaciones menores a USD 5,000 mensuales.
+- Debida Diligencia Estándar: Para la mayoría de clientes. Incluye verificación de identidad y fuente de fondos.
+- Debida Diligencia Reforzada (EDD): Para clientes de alto riesgo, PEPs (Personas Expuestas Políticamente) y operaciones internacionales de alto valor.
+
+3. MONITOREO DE TRANSACCIONES
+
+3.1 Alertas Automáticas
+El sistema debe generar alertas para:
+- Transacciones individuales superiores a USD 10,000.
+- Depósitos en efectivo fraccionados (structuring/smurfing).
+- Transferencias internacionales a jurisdicciones de alto riesgo.
+- Patrones inusuales de actividad en la cuenta.
+- Transacciones inconsistentes con el perfil del cliente.
+
+3.2 Umbrales de Reporte
+- Reporte de Operaciones Sospechosas (ROS): Plazo máximo de 24 horas desde la detección.
+- Reporte de Transacciones en Efectivo (RTE): Para operaciones en efectivo superiores a USD 10,000.
+- Reporte de Transferencias Internacionales: Para montos superiores a USD 5,000.
+
+4. CLASIFICACIÓN DE RIESGO
+Los clientes se clasifican en:
+- BAJO RIESGO: Empleados asalariados, jubilados, cuentas de ahorro básicas.
+- RIESGO MEDIO: Comerciantes, profesionales independientes, empresas locales.
+- ALTO RIESGO: PEPs, empresas offshore, clientes de jurisdicciones de alto riesgo, negocios intensivos en efectivo (casinos, casas de cambio).
+
+5. PERSONAS EXPUESTAS POLÍTICAMENTE (PEPs)
+Requieren aprobación de la alta dirección para apertura de cuenta. Se debe realizar:
+- EDD obligatoria.
+- Monitoreo continuo reforzado.
+- Revisión semestral de la relación comercial.
+- Investigación de origen de patrimonio.
+
+6. SANCIONES POR INCUMPLIMIENTO
+El incumplimiento de esta política puede resultar en:
+- Sanciones regulatorias y multas.
+- Responsabilidad penal para funcionarios.
+- Pérdida de licencia bancaria.
+- Daño reputacional significativo.

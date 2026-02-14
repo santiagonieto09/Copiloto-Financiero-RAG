@@ -1,0 +1,65 @@
+PROCEDIMIENTO DE CRÉDITO HIPOTECARIO
+=====================================
+
+1. REQUISITOS DEL SOLICITANTE
+Para solicitar un crédito hipotecario, el cliente debe cumplir:
+- Edad: Entre 21 y 65 años (al momento de la solicitud).
+- Antigüedad laboral mínima: 2 años en empleo actual (asalariados) o 3 años de actividad comprobable (independientes).
+- Historial crediticio: Score mínimo de 650 puntos en buró de crédito.
+- Capacidad de pago: La cuota mensual no debe exceder el 30% del ingreso neto mensual.
+- Enganche mínimo: 20% del valor del inmueble.
+
+2. DOCUMENTACIÓN REQUERIDA
+
+2.1 Personas Físicas (Asalariados)
+- Identificación oficial vigente.
+- Comprobante de domicilio (máximo 3 meses).
+- Últimos 6 recibos de nómina.
+- Estados de cuenta bancarios (últimos 6 meses).
+- Constancia de antigüedad laboral.
+- Declaración anual de impuestos (último ejercicio).
+- Avalúo del inmueble (máximo 6 meses de vigencia).
+
+2.2 Personas Físicas (Independientes)
+- Todo lo anterior, excepto recibos de nómina.
+- Últimas 2 declaraciones anuales de impuestos.
+- Estados financieros auditados (si aplica).
+- Registro de actividad empresarial.
+
+3. PROCESO DE EVALUACIÓN
+
+3.1 Pre-calificación (Día 1-3)
+- Verificación de requisitos básicos.
+- Consulta de buró de crédito.
+- Cálculo preliminar de capacidad de pago.
+- Resultado: Carta de pre-aprobación o rechazo.
+
+3.2 Análisis Crediticio (Día 4-10)
+- Verificación documental completa.
+- Análisis de capacidad de pago detallado.
+- Evaluación del colateral (inmueble).
+- Verificación de antecedentes legales del inmueble.
+
+3.3 Aprobación (Día 11-15)
+- Comité de crédito evalúa el expediente.
+- Determinación de condiciones: tasa, plazo, monto.
+- Notificación al cliente.
+
+3.4 Formalización (Día 16-30)
+- Firma de contrato ante notario público.
+- Inscripción de hipoteca en el registro público.
+- Desembolso de fondos.
+
+4. CONDICIONES DEL CRÉDITO
+- Tasa de interés: Variable (TIIE + spread) o Fija según producto.
+- Plazos disponibles: 10, 15, 20 o 25 años.
+- Moneda: Moneda local o USD (según regulación vigente).
+- Seguros obligatorios: Vida, daños al inmueble, desempleo.
+- Penalización por pago anticipado: Ninguna después del primer año.
+
+5. INDICADORES DE RIESGO
+El analista debe verificar:
+- Ratio Deuda/Ingreso (DTI): Máximo 40% incluyendo todas las deudas.
+- Loan-to-Value (LTV): Máximo 80% del valor del avalúo.
+- Payment-to-Income (PTI): Máximo 30% del ingreso neto.
+- Estabilidad laboral y tendencia de ingresos.
