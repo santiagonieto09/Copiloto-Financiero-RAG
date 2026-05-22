@@ -138,6 +138,7 @@ async def upload_document(file: UploadFile = File(...)):
         )
 
     # Guardar archivo temporal y procesar
+    tmp_path = None
     try:
         with tempfile.NamedTemporaryFile(
             delete=False,
@@ -166,7 +167,7 @@ async def upload_document(file: UploadFile = File(...)):
         )
     finally:
         # Limpiar archivo temporal
-        if os.path.exists(tmp_path):
+        if tmp_path and os.path.exists(tmp_path):
             os.unlink(tmp_path)
 
 

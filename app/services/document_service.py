@@ -8,11 +8,8 @@ import os
 import logging
 from pathlib import Path
 
-from langchain_community.document_loaders import (
-    PyPDFLoader,
-    TextLoader,
-    Docx2txtLoader,
-)
+from docx import Document as DocxDocument
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
@@ -26,7 +23,7 @@ logger = logging.getLogger(__name__)
 class DocumentService:
     """
     Servicio para ingestión y gestión de documentos financieros.
-    
+
     Responsabilidades:
     - Cargar documentos (PDF, TXT, DOCX)
     - Dividir en chunks optimizados para RAG
@@ -85,29 +82,62 @@ class DocumentService:
             )
         return self._text_splitter
 
+    def _load_docx_document(self, file_path: str) -> list[Document]:
+        """Carga un DOCX usando python-docx para evitar dependencias opcionales."""
+        path = Path(file_path)
+        docx_file = DocxDocument(str(file_path))
+        content_parts: list[str] = []
+
+        for paragraph in docx_file.paragraphs:
+            text = paragraph.text.strip()
+            if text:
+                content_parts.append(text)
+
+        for table in docx_file.tables:
+            for row in table.rows:
+                row_values = [cell.text.strip() for cell in row.cells if cell.text.strip()]
+                if row_values:
+                    content_parts.append(" | ".join(row_values))
+
+        content = "\n\n".join(content_parts).strip()
+        if not content:
+            raise ValueError(
+                f"No se encontró texto extraíble en el documento DOCX: {path.name}"
+            )
+
+        return [
+            Document(
+                page_content=content,
+                metadata={"source": str(path), "source_file": path.name},
+            )
+        ]
+
     def _load_document(self, file_path: str) -> list[Document]:
         """
         Carga un documento según su extensión.
-        
+
         Soporta: PDF, TXT, DOCX
         """
         path = Path(file_path)
         extension = path.suffix.lower()
+        supported_extensions = (".pdf", ".txt", ".docx")
+
+        if extension not in supported_extensions:
+            raise ValueError(
+                f"Formato no soportado: {extension}. "
+                f"Formatos válidos: {list(supported_extensions)}"
+            )
+
+        logger.info(f"Cargando documento: {path.name} ({extension})")
+
+        if extension == ".docx":
+            return self._load_docx_document(str(file_path))
 
         loaders = {
             ".pdf": PyPDFLoader,
             ".txt": TextLoader,
-            ".docx": Docx2txtLoader,
         }
-
-        loader_class = loaders.get(extension)
-        if loader_class is None:
-            raise ValueError(
-                f"Formato no soportado: {extension}. "
-                f"Formatos válidos: {list(loaders.keys())}"
-            )
-
-        logger.info(f"Cargando documento: {path.name} ({extension})")
+        loader_class = loaders[extension]
 
         if extension == ".txt":
             loader = loader_class(str(file_path), encoding="utf-8")
@@ -119,10 +149,10 @@ class DocumentService:
     def ingest_document(self, file_path: str) -> dict:
         """
         Pipeline completo de ingestión: carga → split → embed → store.
-        
+
         Args:
             file_path: Ruta al documento a procesar.
-            
+
         Returns:
             Dict con metadata del procesamiento.
         """
@@ -159,10 +189,10 @@ class DocumentService:
     def ingest_directory(self, directory_path: str) -> list[dict]:
         """
         Ingesta todos los documentos soportados de un directorio.
-        
+
         Args:
             directory_path: Ruta al directorio con documentos.
-            
+
         Returns:
             Lista de resultados de ingestión por archivo.
         """
@@ -202,7 +232,7 @@ class DocumentService:
     def get_retriever(self, k: int | None = None):
         """
         Retorna un retriever configurado para búsqueda por similitud.
-        
+
         Args:
             k: Número de documentos a recuperar (default desde config).
         """
