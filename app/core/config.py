@@ -19,12 +19,13 @@ class Settings(BaseSettings):
     )
 
     # --- Embeddings Provider ---
-    # Opciones: 'huggingface' (local, usa RAM),
-    # 'google' (API, GRATIS en ai.google.dev),
-    # 'mistral' (API, tier gratuito en console.mistral.ai)
+    # Opciones:
+    # - 'google' (API, GRATIS - recomendado para Render Free)
+    # - 'mistral' (API, tier gratuito)
+    # - 'huggingface' (local, +400MB RAM - solo desarrollo local)
     embedding_provider: str = Field(
-        default="huggingface",
-        description="Proveedor de embeddings: huggingface, google, mistral",
+        default="google",
+        description="Proveedor de embeddings: google, mistral, huggingface",
     )
 
     # --- API Keys por provider ---

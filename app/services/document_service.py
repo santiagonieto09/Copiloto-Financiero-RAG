@@ -12,9 +12,6 @@ from typing import Any
 from docx import Document as DocxDocument
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_mistralai import MistralAIEmbeddings
 from langchain_chroma import Chroma
 from langchain.schema import Document
 
@@ -41,7 +38,13 @@ class DocumentService:
         self._text_splitter = None
 
     def _create_embeddings(self) -> Any:
-        """Factory method para crear el provider de embeddings apropiado."""
+        """
+        Factory method para crear el provider de embeddings apropiado.
+
+        IMPORTANTE: Las importaciones son LAZY (dentro de cada rama) para evitar
+        cargar librerías pesadas (torch, sentence-transformers ~400MB) cuando se
+        usa un provider basado en API (google/mistral).
+        """
         provider = self.settings.embedding_provider.lower()
 
         if provider == "google":
@@ -50,6 +53,7 @@ class DocumentService:
                     "GOOGLE_API_KEY es requerido cuando EMBEDDING_PROVIDER=google. "
                     "Obtén una gratis en https://ai.google.dev/"
                 )
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
             logger.info(
                 f"Usando Google Generative AI Embeddings (API - GRATIS): {self.settings.google_embedding_model}"
             )
@@ -64,6 +68,7 @@ class DocumentService:
                     "MISTRAL_API_KEY es requerido cuando EMBEDDING_PROVIDER=mistral. "
                     "Obtén una gratis en https://console.mistral.ai/"
                 )
+            from langchain_mistralai import MistralAIEmbeddings
             logger.info(
                 f"Usando Mistral AI Embeddings (API - tier gratuito): {self.settings.mistral_embedding_model}"
             )
@@ -72,7 +77,8 @@ class DocumentService:
                 model=self.settings.mistral_embedding_model,
             )
 
-        # Default: HuggingFace (local)
+        # Default: HuggingFace (local - solo se importa si realmente se usa)
+        from langchain_huggingface import HuggingFaceEmbeddings
         logger.info(
             f"Cargando modelo de embeddings local: {self.settings.embedding_model}"
         )

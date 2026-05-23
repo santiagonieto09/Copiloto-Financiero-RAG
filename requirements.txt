@@ -6,14 +6,17 @@ python-multipart==0.0.20
 # LLM & RAG
 langchain==0.3.14
 langchain-groq==0.2.4
-langchain-openai==0.3.0
-langchain-huggingface==0.1.2
 langchain-chroma==0.2.2
 langchain-community==0.3.14
 
-# Vector Store & Embeddings
+# Vector Store
 chromadb==0.6.3
-sentence-transformers==3.4.1
+
+# Embeddings - HuggingFace (OPCIONAL - solo si usas EMBEDDING_PROVIDER=huggingface en local)
+# Comentado por defecto porque consume +400MB de RAM (no apto para Render Free)
+# Descomenta solo si vas a usar embeddings locales con suficiente RAM
+# langchain-huggingface==0.1.2
+# sentence-transformers==3.4.1
 
 # Google Generative AI (Gemini - Free tier available)
 # Nota: google-generativeai y langchain-google-genai tienen dependencias compartidas
