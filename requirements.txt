@@ -23,6 +23,7 @@ langchain-google-genai>=2.0.0
 
 # Mistral AI (Free tier available)
 mistralai==1.5.1
+langchain-mistralai==0.2.7
 
 # Document Loaders
 pypdf==5.1.0
