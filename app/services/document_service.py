@@ -7,11 +7,14 @@ para ser consultados mediante RAG.
 import os
 import logging
 from pathlib import Path
+from typing import Any
 
 from docx import Document as DocxDocument
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_mistralai import MistralAIEmbeddings
 from langchain_chroma import Chroma
 from langchain.schema import Document
 
@@ -37,19 +40,54 @@ class DocumentService:
         self._vector_store = None
         self._text_splitter = None
 
+    def _create_embeddings(self) -> Any:
+        """Factory method para crear el provider de embeddings apropiado."""
+        provider = self.settings.embedding_provider.lower()
+
+        if provider == "google":
+            if not self.settings.google_api_key:
+                raise ValueError(
+                    "GOOGLE_API_KEY es requerido cuando EMBEDDING_PROVIDER=google. "
+                    "Obtén una gratis en https://ai.google.dev/"
+                )
+            logger.info(
+                f"Usando Google Generative AI Embeddings (API - GRATIS): {self.settings.google_embedding_model}"
+            )
+            return GoogleGenerativeAIEmbeddings(
+                google_api_key=self.settings.google_api_key,
+                model=self.settings.google_embedding_model,
+            )
+
+        if provider == "mistral":
+            if not self.settings.mistral_api_key:
+                raise ValueError(
+                    "MISTRAL_API_KEY es requerido cuando EMBEDDING_PROVIDER=mistral. "
+                    "Obtén una gratis en https://console.mistral.ai/"
+                )
+            logger.info(
+                f"Usando Mistral AI Embeddings (API - tier gratuito): {self.settings.mistral_embedding_model}"
+            )
+            return MistralAIEmbeddings(
+                api_key=self.settings.mistral_api_key,
+                model=self.settings.mistral_embedding_model,
+            )
+
+        # Default: HuggingFace (local)
+        logger.info(
+            f"Cargando modelo de embeddings local: {self.settings.embedding_model}"
+        )
+        return HuggingFaceEmbeddings(
+            model_name=self.settings.embedding_model,
+            model_kwargs={"device": "cpu"},
+            encode_kwargs={"normalize_embeddings": True},
+        )
+
     @property
-    def embeddings(self) -> HuggingFaceEmbeddings:
+    def embeddings(self):
         """Lazy loading de embeddings para optimizar startup."""
         if self._embeddings is None:
-            logger.info(
-                f"Cargando modelo de embeddings: {self.settings.embedding_model}"
-            )
-            self._embeddings = HuggingFaceEmbeddings(
-                model_name=self.settings.embedding_model,
-                model_kwargs={"device": "cpu"},
-                encode_kwargs={"normalize_embeddings": True},
-            )
-            logger.info("Modelo de embeddings cargado exitosamente")
+            self._embeddings = self._create_embeddings()
+            logger.info("Embeddings inicializados exitosamente")
         return self._embeddings
 
     @property

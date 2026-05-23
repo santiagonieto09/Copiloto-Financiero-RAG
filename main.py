@@ -42,7 +42,15 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Copiloto Financiero RAG - Iniciando...")
     logger.info(f"   Entorno:    {settings.app_env}")
     logger.info(f"   LLM:        {settings.groq_model}")
-    logger.info(f"   Embeddings: {settings.embedding_model}")
+    logger.info(f"   Embeddings: {settings.embedding_provider}")
+
+    provider = settings.embedding_provider.lower()
+    if provider == "google":
+        logger.info(f"   Model:      {settings.google_embedding_model} (API - GRATIS)")
+    elif provider == "mistral":
+        logger.info(f"   Model:      {settings.mistral_embedding_model} (API - tier gratuito)")
+    else:
+        logger.info(f"   Model:      {settings.embedding_model} (local - usa RAM)")
     logger.info(f"   ChromaDB:   {settings.chroma_persist_dir}")
     logger.info("=" * 60)
     yield

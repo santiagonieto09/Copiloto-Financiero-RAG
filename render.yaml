@@ -1,5 +1,11 @@
 # Render Blueprint Configuration
 # https://render.com/docs/blueprint-spec
+#
+# IMPORTANTE: Para el plan Free (512MB RAM), configura:
+#   EMBEDDING_PROVIDER=openai
+#   OPENAI_API_KEY=tu_api_key
+#
+# Esto evita el error "Ran out of memory" al cargar el modelo HuggingFace local.
 
 services:
   - type: web
@@ -9,22 +15,52 @@ services:
     branch: main
     healthCheckPath: /api/v1/health
     envVars:
+      # === API Keys (Configurar manualmente en dashboard) ===
       - key: GROQ_API_KEY
-        sync: false 
+        sync: false  # Obtener en: https://console.groq.com/keys (obligatorio)
+      - key: GOOGLE_API_KEY
+        sync: false  # Obtener gratis en: https://ai.google.dev/ (recomendado)
+      - key: MISTRAL_API_KEY
+        sync: false  # Obtener en: https://console.mistral.ai/ (tier gratuito)
+
+      # === LLM Configuration ===
       - key: GROQ_MODEL
         value: llama-3.3-70b-versatile
+
+      # === Embeddings Provider ===
+      # huggingface = gratis pero usa 300-400MB RAM (NO funciona en plan Free)
+      # google = API, GRATIS (recomendado para plan Free) - https://ai.google.dev/
+      # mistral = API, tier gratuito - https://console.mistral.ai/
+      - key: EMBEDDING_PROVIDER
+        value: google
+
+      # Google (GRATIS - recomendado)
+      - key: GOOGLE_EMBEDDING_MODEL
+        value: models/embedding-001
+
+      # Mistral (tier gratuito)
+      - key: MISTRAL_EMBEDDING_MODEL
+        value: mistral-embed
+
+      # HuggingFace (local - solo para servidores con +1GB RAM)
       - key: EMBEDDING_MODEL
         value: sentence-transformers/all-MiniLM-L6-v2
+
+      # === ChromaDB ===
       - key: CHROMA_PERSIST_DIR
         value: /app/data/chroma_db
       - key: CHROMA_COLLECTION_NAME
         value: financial_docs
+
+      # === Server Configuration ===
       - key: APP_HOST
         value: 0.0.0.0
       - key: APP_PORT
         value: 8000
       - key: APP_ENV
         value: production
+
+      # === RAG Configuration ===
       - key: CHUNK_SIZE
         value: 1000
       - key: CHUNK_OVERLAP

@@ -18,10 +18,37 @@ class Settings(BaseSettings):
         description="Modelo LLM a usar en Groq",
     )
 
+    # --- Embeddings Provider ---
+    # Opciones: 'huggingface' (local, usa RAM),
+    # 'google' (API, GRATIS en ai.google.dev),
+    # 'mistral' (API, tier gratuito en console.mistral.ai)
+    embedding_provider: str = Field(
+        default="huggingface",
+        description="Proveedor de embeddings: huggingface, google, mistral",
+    )
+
+    # --- API Keys por provider ---
+    google_api_key: str | None = Field(
+        default=None,
+        description="API Key de Google Gemini (requerido si embedding_provider='google') - Gratis en ai.google.dev",
+    )
+    mistral_api_key: str | None = Field(
+        default=None,
+        description="API Key de Mistral AI (requerido si embedding_provider='mistral') - Gratis en console.mistral.ai",
+    )
+
     # --- Embeddings ---
     embedding_model: str = Field(
         default="sentence-transformers/all-MiniLM-L6-v2",
-        description="Modelo de embeddings de HuggingFace",
+        description="Modelo de embeddings de HuggingFace (solo si provider='huggingface')",
+    )
+    google_embedding_model: str = Field(
+        default="models/embedding-001",
+        description="Modelo de embeddings de Google (solo si provider='google')",
+    )
+    mistral_embedding_model: str = Field(
+        default="mistral-embed",
+        description="Modelo de embeddings de Mistral (solo si provider='mistral')",
     )
 
     # --- ChromaDB ---

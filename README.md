@@ -187,3 +187,87 @@ Este proyecto demuestra experiencia en:
 - **APIs REST**: FastAPI con documentación automática, validación Pydantic, manejo de errores.
 - **Python avanzado**: Patrones de diseño (Singleton, Factory), async/await, type hints.
 - **Arquitectura de software**: Separación de responsabilidades, inyección de dependencias, configuración centralizada.
+
+---
+
+## 🚀 Despliegue en Render
+
+### ⚠️ IMPORTANTE: Plan Free (512MB RAM)
+
+El modelo de embeddings HuggingFace (`all-MiniLM-L6-v2`) ocupa ~400MB al cargarse. En el **plan gratuito de Render (512MB RAM)**, esto causa **Out of Memory**.
+
+#### Solución Gratuita: Usar Google Generative AI
+Configura las variables en Render:
+```
+EMBEDDING_PROVIDER=google
+GOOGLE_API_KEY=tu_api_key_gratis
+```
+
+**Cómo obtener Google API Key (GRATIS):**
+1. Ve a [ai.google.dev](https://ai.google.dev/)
+2. Clickea "Get API key"
+3. Crea una clave (no requiere tarjeta de crédito)
+4. Copia la clave en tu dashboard de Render
+
+#### Alternativas Gratuitas
+
+| Provider | Costo | Obtener API Key | Variable |
+|----------|-------|-----------------|----------|
+| **Google** | **Gratis** | [ai.google.dev](https://ai.google.dev/) | `GOOGLE_API_KEY` |
+| Mistral | Tier gratuito | [console.mistral.ai](https://console.mistral.ai/) | `MISTRAL_API_KEY` |
+
+---
+
+### Opción 1: Blueprint (Recomendado)
+
+1. **Fork o sube este repo a GitHub**
+2. **Ve a [Render](https://render.com)** y conecta tu repositorio
+3. Render detectará automáticamente el `render.yaml` y configurará el servicio
+4. **Configura las variables en el dashboard:**
+   - `GROQ_API_KEY` (obligatorio - [console.groq.com](https://console.groq.com/keys))
+   - `GOOGLE_API_KEY` u `MISTRAL_API_KEY` (recomendado Google, gratis - [ai.google.dev](https://ai.google.dev/))
+
+### Opción 2: Docker Manual
+
+1. Crea un nuevo **Web Service** en Render
+2. Selecciona **Runtime: Docker**
+3. Conecta tu repositorio
+4. Configura las variables de entorno (ver sección ⚠️ arriba)
+
+### ⚠️ Consideraciones de ChromaDB en Render
+
+> **Importante**: El plan gratuito de Render tiene filesystem efímero. Los datos de ChromaDB se perderán en cada redeploy.
+
+**Soluciones:**
+- **Para desarrollo/demo**: Indexa documentos después de cada despliegue usando el endpoint `/api/v1/documents/ingest-directory`
+- **Para producción**: Migra a [ChromaDB Cloud](https://trychroma.com/) o usa un volumen persistente (planes pagados de Render)
+
+---
+
+## 🔗 URL de la API
+
+Una vez desplegado, tu API estará disponible en:
+```
+https://tu-servicio-en-render.onrender.com
+```
+
+Endpoints principales:
+- `GET /api/v1/health` - Health check
+- `POST /api/v1/chat` - Chat con RAG
+- `POST /api/v1/documents/upload` - Subir documentos
+
+### Variables de Entorno Completas
+
+| Variable | Descripción | Recomendado Plan Free |
+|----------|-------------|----------------------|
+| `GROQ_API_KEY` | API Key de Groq (obligatorio) | `gsk_...` |
+| `EMBEDDING_PROVIDER` | `google`, `mistral`, `huggingface` | `google` |
+| `GOOGLE_API_KEY` | API Key de Google Gemini (gratis) | `AIza...` |
+| `MISTRAL_API_KEY` | API Key de Mistral (tier gratuito) | Obtener en console.mistral.ai |
+| `GROQ_MODEL` | Modelo LLM | `llama-3.3-70b-versatile` |
+
+**Configuración recomendada para Render Free:**
+```
+EMBEDDING_PROVIDER=google
+GOOGLE_API_KEY=tu_clave_gratis_de_ai.google.dev
+```
