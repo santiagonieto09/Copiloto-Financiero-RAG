@@ -44,7 +44,7 @@ class Settings(BaseSettings):
         description="Modelo de embeddings de HuggingFace (solo si provider='huggingface')",
     )
     google_embedding_model: str = Field(
-        default="models/embedding-001",
+        default="models/text-embedding-004",
         description="Modelo de embeddings de Google (solo si provider='google')",
     )
     mistral_embedding_model: str = Field(

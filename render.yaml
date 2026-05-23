@@ -36,7 +36,7 @@ services:
 
       # Google (GRATIS - recomendado)
       - key: GOOGLE_EMBEDDING_MODEL
-        value: models/embedding-001
+        value: models/text-embedding-004
 
       # Mistral (tier gratuito)
       - key: MISTRAL_EMBEDDING_MODEL
