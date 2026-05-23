@@ -6,18 +6,20 @@ __pycache__/
 dist/
 build/
 *.egg
+.pytest_cache/
 
 # Virtual Environment
 venv/
 .venv/
 env/
+ENV/
 
 # Environment Variables
 .env
 
-# ChromaDB Data
-data/chroma_db/*
-!data/chroma_db/.gitkeep
+# Git
+.git/
+.gitignore
 
 # IDE
 .vscode/
@@ -33,6 +35,18 @@ Thumbs.db
 *.log
 
 # Testing
-.pytest_cache/
 htmlcov/
 .coverage
+
+# Render
+render.yaml
+
+# Documentación
+README.md
+
+# ChromaDB local (se recreará en el contenedor)
+data/chroma_db/*
+!data/chroma_db/.gitkeep
+
+# Tests (no necesarios en producción)
+tests/
