@@ -16,8 +16,10 @@ chromadb==0.6.3
 sentence-transformers==3.4.1
 
 # Google Generative AI (Gemini - Free tier available)
-google-generativeai==0.8.4
-langchain-google-genai==2.0.11
+# Nota: google-generativeai y langchain-google-genai tienen dependencias compartidas
+# Dejamos que pip resuelva las versiones compatibles automáticamente
+google-generativeai>=0.8.0
+langchain-google-genai>=2.0.0
 
 # Mistral AI (Free tier available)
 mistralai==1.5.1
