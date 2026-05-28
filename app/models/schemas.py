@@ -74,6 +74,14 @@ class ChatResponse(BaseModel):
         default_factory=datetime.now,
         description="Marca de tiempo de la respuesta",
     )
+    guardrail_triggered: bool = Field(
+        default=False,
+        description="Indica si se aplicó una regla de seguridad o dominio",
+    )
+    guardrail_reason: Optional[str] = Field(
+        default=None,
+        description="Motivo de la regla aplicada, si existe",
+    )
 
 
 # ============================================
@@ -84,6 +92,14 @@ class DocumentUploadResponse(BaseModel):
     """Respuesta tras subir un documento."""
     filename: str = Field(description="Nombre del archivo procesado")
     chunks_created: int = Field(description="Número de chunks generados")
+    chunks_rejected: int = Field(
+        default=0,
+        description="Chunks descartados por estar fuera del dominio financiero",
+    )
+    suspicious_chunks: int = Field(
+        default=0,
+        description="Chunks con posibles instrucciones maliciosas detectadas",
+    )
     doc_type: DocumentType = Field(description="Tipo de documento")
     message: str = Field(description="Mensaje de estado")
 

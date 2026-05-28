@@ -154,11 +154,20 @@ async def upload_document(file: UploadFile = File(...)):
         return DocumentUploadResponse(
             filename=file.filename,
             chunks_created=result["chunks_created"],
+            chunks_rejected=result.get("chunks_rejected", 0),
+            suspicious_chunks=result.get("suspicious_chunks", 0),
             doc_type=DocumentType(result["doc_type"]),
             message=f"Documento '{file.filename}' procesado exitosamente. "
-                    f"{result['chunks_created']} chunks indexados.",
+                    f"{result['chunks_created']} chunks indexados "
+                    f"y {result.get('chunks_rejected', 0)} descartados.",
         )
 
+    except ValueError as e:
+        logger.warning(f"Documento rechazado: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
     except Exception as e:
         logger.error(f"Error subiendo documento: {e}")
         raise HTTPException(
