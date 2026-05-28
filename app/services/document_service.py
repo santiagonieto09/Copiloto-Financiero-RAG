@@ -16,7 +16,6 @@ from langchain_chroma import Chroma
 from langchain.schema import Document
 
 from app.core.config import get_settings
-from app.services.guardrails import classify_financial_domain
 
 logger = logging.getLogger(__name__)
 
@@ -209,63 +208,25 @@ class DocumentService:
         chunks = self.text_splitter.split_documents(documents)
         logger.info(f"Documento dividido en {len(chunks)} chunks")
 
-        # 3. Filtrar contenido fuera del dominio financiero antes de indexar.
-        financial_chunks: list[Document] = []
-        rejected_chunks = 0
-        suspicious_chunks = 0
-        for chunk in chunks:
-            decision = classify_financial_domain(chunk.page_content)
-            if decision.allowed:
-                chunk.metadata.update({
-                    "domain": "finance",
-                    "domain_score": decision.score,
-                    "matched_terms": ", ".join(decision.matched_terms),
-                    "prompt_injection_detected": decision.prompt_injection_detected,
-                })
-                if decision.prompt_injection_detected:
-                    suspicious_chunks += 1
-                    logger.warning(
-                        "Posible prompt injection detectado en chunk de '%s'",
-                        Path(file_path).name,
-                    )
-                financial_chunks.append(chunk)
-            else:
-                rejected_chunks += 1
-
-        if not financial_chunks:
-            raise ValueError(
-                "El documento no parece pertenecer al dominio financiero. "
-                "No se indexó contenido."
-            )
-
-        if rejected_chunks:
-            logger.info(
-                "Se descartaron %s chunks no financieros de '%s'",
-                rejected_chunks,
-                Path(file_path).name,
-            )
-
-        # 4. Enriquecer metadata
+        # 3. Enriquecer metadata
         filename = Path(file_path).name
-        for i, chunk in enumerate(financial_chunks):
+        for i, chunk in enumerate(chunks):
             chunk.metadata.update({
                 "source_file": filename,
                 "chunk_index": i,
-                "total_chunks": len(financial_chunks),
+                "total_chunks": len(chunks),
             })
 
-        # 5. Almacenar en vector store
-        self.vector_store.add_documents(financial_chunks)
+        # 4. Almacenar en vector store
+        self.vector_store.add_documents(chunks)
         logger.info(
-            f"✓ {len(financial_chunks)} chunks almacenados en ChromaDB "
+            f"✓ {len(chunks)} chunks almacenados en ChromaDB "
             f"para '{filename}'"
         )
 
         return {
             "filename": filename,
-            "chunks_created": len(financial_chunks),
-            "chunks_rejected": rejected_chunks,
-            "suspicious_chunks": suspicious_chunks,
+            "chunks_created": len(chunks),
             "doc_type": Path(file_path).suffix.lstrip("."),
         }
 
